@@ -131,13 +131,6 @@ document.addEventListener("click", (e) => {
     });
     // Outside Loop
     // If Letter Is Wrong
-    if (
-      document
-        .querySelector(".letters-guess")
-        .contains(document.querySelector(".with-space")) === true
-    ) {
-      rightAttempts = rightAttempts - 1;
-    }
     if (theStatus !== true) {
       // Increase The Wrong Attempts
       wrongAttempts++;
@@ -145,15 +138,22 @@ document.addEventListener("click", (e) => {
       theDraw.classList.add(`wrong-${wrongAttempts}`);
       // Play Fail Sound
     } else {
-      rightAttempts++;
+      rightAttempts += theChosenWord.filter(
+        (l) => l === theClickedLetter
+      ).length;
     }
     if (wrongAttempts === 8) {
       document.getElementById("fail").play();
       endGameLose();
       lettersContainer.classList.add("finished");
     } else if (
+      (rightAttempts ===
+        document.querySelector(".letters-guess").childElementCount - 1 &&
+        document
+          .querySelector(".letters-guess")
+          .contains(document.querySelector(".with-space"))) ||
       rightAttempts ===
-      document.querySelector(".letters-guess").childElementCount
+        document.querySelector(".letters-guess").childElementCount
     ) {
       endGameWin();
     }
@@ -195,3 +195,4 @@ function endGameWin() {
   // Append To The Body
   document.body.appendChild(div);
 }
+console.log();
